@@ -52,6 +52,7 @@ export const SignInStyles = StyleSheet.create({
     width: SCREEN_WIDTH - 60 - 55,
     borderBottomColor: '#979797',
     borderBottomWidth: 1,
+    color: 'white',
   },
   showHideIcon: {
     position: 'absolute',
