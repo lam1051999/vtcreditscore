@@ -14,12 +14,15 @@ import Animated, {
   Value,
   SpringUtils,
   interpolate,
+  sub,
 } from 'react-native-reanimated';
 import {
   SIGN_IN_LAYOUT_HEIGHT,
   SCREEN_HEIGHT,
+  SIGNIN_IMAGE_HEIGHT,
 } from '../../../constants/Constants';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function SignIn() {
   const _translateY = useRef(new Value(0)).current;
@@ -58,12 +61,20 @@ export default function SignIn() {
     }, []),
   );
   const _scale = interpolate(_translateY, {
-    inputRange: [-115, 0],
-    outputRange: [0.55, 1],
+    inputRange: [-SIGNIN_IMAGE_HEIGHT / 2, 0, SIGNIN_IMAGE_HEIGHT / 2],
+    outputRange: [0.55, 1, 1],
+  });
+  const _translateYImage = interpolate(_translateY, {
+    inputRange: [-SIGNIN_IMAGE_HEIGHT / 2, 0, SIGNIN_IMAGE_HEIGHT / 2],
+    outputRange: [-SIGNIN_IMAGE_HEIGHT / 2 - 20, 0, SIGNIN_IMAGE_HEIGHT / 2],
   });
 
   return (
-    <View style={styles.container}>
+    <LinearGradient
+      colors={['#22343C', '#1F2E35']}
+      start={{x: 0, y: 0}}
+      end={{x: 1, y: 1}}
+      style={styles.container}>
       <TouchableWithoutFeedback
         onPress={Keyboard.dismiss}
         style={styles.wrapper}>
@@ -77,7 +88,7 @@ export default function SignIn() {
                   scale: _scale,
                 },
                 {
-                  translateY: _translateY,
+                  translateY: _translateYImage,
                 },
                 {
                   perspective: 1000,
@@ -148,6 +159,6 @@ export default function SignIn() {
           </TouchableOpacity>
         </Animated.View>
       </TouchableWithoutFeedback>
-    </View>
+    </LinearGradient>
   );
 }

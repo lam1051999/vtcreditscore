@@ -14,7 +14,7 @@ export const SignInStyles = StyleSheet.create({
     width: '100%',
     height: '100%',
     paddingHorizontal: 30,
-    paddingVertical: 10,
+    paddingTop: 30,
     alignItems: 'center',
   },
   image: {
@@ -26,8 +26,8 @@ export const SignInStyles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: SIGN_IN_LAYOUT_ITEMS_HEIGHT.WELCOME_TEXT_FONTSIZE,
-    color: '#444242',
-    fontFamily: 'Roboto-Bold',
+    color: 'white',
+    fontFamily: 'Poppins-SemiBold',
     marginVertical: 10,
   },
   textInputContainer: {
@@ -46,11 +46,11 @@ export const SignInStyles = StyleSheet.create({
     marginRight: 10,
   },
   textInput: {
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Poppins-Regular',
     fontSize: 17,
     //60 is horizontal padding, 55 is 45 iconContainer's width + 10 marginRight
     width: SCREEN_WIDTH - 60 - 55,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#979797',
     borderBottomWidth: 1,
   },
   showHideIcon: {
@@ -69,6 +69,6 @@ export const SignInStyles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     marginRight: 10,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: 'Poppins-Regular',
   },
 });

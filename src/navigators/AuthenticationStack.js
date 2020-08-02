@@ -10,9 +10,6 @@ export default function AuthenticationStack() {
       screenOptions={{
         headerShown: false,
         ...TransitionPresets.SlideFromRightIOS,
-        cardStyle: {
-          backgroundColor: 'white',
-        },
       }}>
       <Stack.Screen name="Signin" component={SignIn} />
     </Stack.Navigator>
