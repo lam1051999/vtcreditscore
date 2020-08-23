@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import Customer from '../containers/Users/customer/Customer';
-import BottomTabNavigator from './BottomTabNavigator';
+import Customers from '../containers/Users/customers/Customers';
 
 const Stack = createStackNavigator();
 
@@ -12,8 +12,8 @@ export default function AppStackNavigator() {
         headerShown: false,
         ...TransitionPresets.SlideFromRightIOS,
       }}
-      initialRouteName="tabs">
-      <Stack.Screen name="tabs" component={BottomTabNavigator} />
+      initialRouteName="customers">
+      <Stack.Screen name="customers" component={Customers} />
       <Stack.Screen name="customer" component={Customer} />
     </Stack.Navigator>
   );

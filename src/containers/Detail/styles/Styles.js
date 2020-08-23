@@ -1,14 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {
-  BOTTOMTAB_HEIGHT,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-} from '../../../constants/Constants';
+import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../../../constants/Constants';
 
 export const DashboardStyles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: BOTTOMTAB_HEIGHT,
     position: 'relative',
   },
 });
