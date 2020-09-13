@@ -21,7 +21,7 @@ export default function SplashScreen() {
             opacity: _opacity,
           },
         ]}>
-        Credit Scoring
+        Đánh giá tín dụng
       </Animated.Text>
       <Animated.Text
         style={[
@@ -31,7 +31,7 @@ export default function SplashScreen() {
           },
         ]}
         numberOfLines={2}>
-        Strengthen your purse, power your bussiness, buy you a dream life
+        Đánh giá điểm tín dụng chính xác, phân tích dữ liệu lớn
       </Animated.Text>
       <Animated.Image
         resizeMode="cover"
@@ -55,7 +55,7 @@ export default function SplashScreen() {
             opacity: _opacity,
           },
         ]}>
-        Powered by Học Sinh Giỏi
+        Phát triển bởi Học Sinh Giỏi
       </Animated.Text>
     </GradientBackground>
   );

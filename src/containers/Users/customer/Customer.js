@@ -26,12 +26,14 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {PieChart} from 'react-native-chart-kit';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import OutlineCircle from '../../../components/OutlineCircle';
 
 const chartConfig = {
   color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
 };
 
 export default function Customer({navigation, route}) {
+  const modalHeight = SCREEN_HEIGHT - StatusBar.currentHeight - 120;
   const _tapState = useRef(new Value(State.UNDETERMINED)).current;
   const _backTapState = useRef(new Value(State.UNDETERMINED)).current;
   const _tapTradeState = useRef(new Value(State.UNDETERMINED)).current;
@@ -111,11 +113,13 @@ export default function Customer({navigation, route}) {
     () => [cond(eq(_backTapTradeState, State.END), set(_isOpenTrade, 0))],
     [_backTapTradeState],
   );
-  const {userDetail} = route.params;
+  const {userDetail, icon, random_color} = route.params;
 
   return (
     <GradientBackground extraStyles={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{height: SCREEN_HEIGHT}}>
         <View style={styles.wrapper}>
           <MaterialCommunityIcon
             name="keyboard-backspace"
@@ -126,15 +130,24 @@ export default function Customer({navigation, route}) {
           />
           <View style={styles.nameContainer}>
             <View style={styles.imageOutterContainer}>
-              <View style={styles.imageContainer}>
-                <Image
-                  style={styles.image}
-                  source={userDetail.icon}
-                  resizeMode="cover"
-                />
+              <View
+                style={[
+                  styles.imageContainer,
+                  {
+                    backgroundColor: random_color,
+                  },
+                ]}>
+                <Image style={styles.image} source={icon} resizeMode="cover" />
               </View>
             </View>
-            <Text style={styles.name}>{userDetail.name}</Text>
+            <View style={styles.infoContainer}>
+              <Text style={styles.infoId}>
+                Id: {userDetail.msisdn ? userDetail.msisdn : 'Unknown'}
+              </Text>
+              <Text style={styles.name}>
+                Năm sinh: {userDetail.born_in ? userDetail.born_in : 'Unknown'}
+              </Text>
+            </View>
           </View>
           <View style={styles.phoneContainer}>
             <View style={styles.flagContainer}>
@@ -143,18 +156,22 @@ export default function Customer({navigation, route}) {
                 resizeMode="cover"
                 style={styles.vnflag}
               />
-              <Text style={styles.phonePrefix}>+84</Text>
+              <Text style={styles.phonePrefix}>Mã tỉnh</Text>
             </View>
-            <Text style={styles.phoneSuffix}>{userDetail.phone.slice(1)}</Text>
+            <Text style={styles.phoneSuffix}>
+              {userDetail.ZIP_CODE ? userDetail.ZIP_CODE : 'Unknown'}
+            </Text>
           </View>
           <View style={styles.ageContainer}>
             <AntDesignIcon name="user" color="#96A7AF" size={25} />
-            <Text style={styles.label}>Age</Text>
-            <Text style={styles.label}>{userDetail.age}</Text>
+            <Text style={styles.label}>Tuổi</Text>
+            <Text style={styles.label}>
+              {userDetail.age ? userDetail.age : 'Unknow'}
+            </Text>
           </View>
           <View style={styles.ageContainer}>
-            <FontAwesome5Icon name="building" size={25} color="#96A7AF" />
-            <Text style={styles.label}>Address</Text>
+            <FontAwesome5Icon name="transgender" size={25} color="#96A7AF" />
+            <Text style={styles.label}>Giới tính</Text>
             <Text
               numberOfLines={2}
               style={[
@@ -163,13 +180,17 @@ export default function Customer({navigation, route}) {
                   width: SCREEN_WIDTH - 200,
                 },
               ]}>
-              {userDetail.address}
+              {userDetail.sex
+                ? userDetail.sex === 'F'
+                  ? 'Nữ'
+                  : 'Nam'
+                : 'Unknown'}
             </Text>
           </View>
           <View style={styles.divider} />
           <View style={styles.chartContainer}>
             <Text style={styles.chartTitle}>Credit Score</Text>
-            <PieChart
+            {/* <PieChart
               data={userDetail.credit_scores}
               width={300}
               height={200}
@@ -179,7 +200,7 @@ export default function Customer({navigation, route}) {
               style={{
                 marginTop: 10,
               }}
-            />
+            /> */}
           </View>
           {/* tap cước di động */}
           <TapGestureHandler
@@ -235,47 +256,142 @@ export default function Customer({navigation, route}) {
           <UserModalContainer
             _translateModalY={_translateModalY}
             width={SCREEN_WIDTH - 60}
-            height={SCREEN_HEIGHT - StatusBar.currentHeight - 120}
+            height={modalHeight}
             marginHorizontal={30}
             marginTop={60}>
-            <Text>user modal</Text>
-            <TapGestureHandler
-              onGestureEvent={_backTapStateGestureEvent}
-              onHandlerStateChange={_backTapStateGestureEvent}>
-              <Animated.View
-                style={{
-                  backgroundColor: '#64b5f6',
-                  width: 250,
-                  height: 50,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text>Back</Text>
-              </Animated.View>
-            </TapGestureHandler>
+            <View style={styles.mobileModalContainer}>
+              <Text style={styles.topTitle}>Thông tin cước di động</Text>
+              <View style={styles.dataContainer}>
+                <Text style={styles.dataTitle}>Lượng dữ liệu đã sử dụng</Text>
+                <Text style={styles.subData}>
+                  {userDetail.sum_uploaddata ? userDetail.sum_uploaddata : 0}{' '}
+                  Bytes
+                </Text>
+                <OutlineCircle outlineColor="#3ED598" width={modalHeight / 3.5}>
+                  <Text style={styles.data}>
+                    {userDetail.sum_uploaddata
+                      ? (userDetail.sum_uploaddata / Math.pow(1024, 3)).toFixed(
+                          2,
+                        )
+                      : 0}
+                  </Text>
+                  <Text style={styles.dataLabel}>GB</Text>
+                </OutlineCircle>
+              </View>
+              <View style={styles.subSectionContainer}>
+                <View style={styles.peopleContainer}>
+                  <Text style={styles.peopleTitle}>Số người đã liên lạc</Text>
+                  <OutlineCircle
+                    outlineColor="#FF565E"
+                    width={modalHeight / 4.5}>
+                    <Text style={styles.people}>
+                      {userDetail.PARTNER_MSISDN
+                        ? userDetail.PARTNER_MSISDN
+                        : 0}
+                    </Text>
+                    <Text style={styles.peopleLabel}>Người</Text>
+                  </OutlineCircle>
+                </View>
+                <View style={styles.peopleContainer}>
+                  <Text style={styles.peopleTitle}>Số tiền nạp dịch vụ</Text>
+                  <OutlineCircle
+                    outlineColor="#FFC542"
+                    width={modalHeight / 4.5}>
+                    <Text style={styles.people}>
+                      {userDetail.sum_re ? userDetail.sum_re / 1000 : 0}K
+                    </Text>
+                    <Text style={styles.peopleLabel}>VNĐ</Text>
+                  </OutlineCircle>
+                </View>
+              </View>
+              <TapGestureHandler
+                onGestureEvent={_backTapStateGestureEvent}
+                onHandlerStateChange={_backTapStateGestureEvent}>
+                <Animated.View style={styles.backButtonContainer}>
+                  <Text style={styles.backText}>Trở về</Text>
+                </Animated.View>
+              </TapGestureHandler>
+            </View>
           </UserModalContainer>
           {/* Thông tin giao dịch modal */}
           <UserModalContainer
             _translateModalY={_translateModalYTrade}
             width={SCREEN_WIDTH - 60}
-            height={SCREEN_HEIGHT - StatusBar.currentHeight - 120}
+            height={modalHeight}
             marginHorizontal={30}
             marginTop={60}>
-            <Text>trade modal</Text>
-            <TapGestureHandler
-              onGestureEvent={_backTapTradeStateGestureEvent}
-              onHandlerStateChange={_backTapTradeStateGestureEvent}>
-              <Animated.View
-                style={{
-                  backgroundColor: '#64b5f6',
-                  width: 250,
-                  height: 50,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text>Back</Text>
-              </Animated.View>
-            </TapGestureHandler>
+            <View style={styles.mobileModalContainer}>
+              <Text style={styles.topTitle}>Thông tin giao dịch</Text>
+              <View>
+                <Text style={styles.top2Title}>Thông tin tài chính</Text>
+                <View style={styles.subSectionContainer}>
+                  <View style={styles.peopleContainer}>
+                    <OutlineCircle
+                      outlineColor="#3ED598"
+                      width={modalHeight / 4.5}>
+                      <Text style={styles.people}>
+                        {userDetail.mon_pos ? userDetail.mon_pos / 1000000 : 0}{' '}
+                        Tr{' '}
+                      </Text>
+                      <Text style={styles.peopleLabel}>VNĐ đã trả</Text>
+                    </OutlineCircle>
+                  </View>
+                  <View style={styles.peopleContainer}>
+                    <OutlineCircle
+                      outlineColor="#FF565E"
+                      width={modalHeight / 4.5}>
+                      <Text style={styles.people}>
+                        {userDetail.mon_neg ? -userDetail.mon_neg / 1000000 : 0}{' '}
+                        Tr{' '}
+                      </Text>
+                      <Text style={styles.peopleLabel}>VNĐ vay</Text>
+                    </OutlineCircle>
+                  </View>
+                </View>
+              </View>
+              <View>
+                <Text style={styles.top2Title}>Thông tin số giao dịch</Text>
+                <View style={styles.subSectionContainer}>
+                  <View style={styles.peopleContainer}>
+                    <OutlineCircle
+                      outlineColor="#9575cd"
+                      width={modalHeight / 4.5}>
+                      <Text style={styles.people}>
+                        {userDetail.trade_re ? userDetail.trade_re : 0}{' '}
+                      </Text>
+                      <Text style={styles.peopleLabel}>Lần nạp</Text>
+                    </OutlineCircle>
+                  </View>
+                  <View style={styles.peopleContainer}>
+                    <OutlineCircle
+                      outlineColor="#ffa726"
+                      width={modalHeight / 4.5}>
+                      <Text style={styles.people}>
+                        {userDetail.trade_lo ? userDetail.trade_lo : 0}{' '}
+                      </Text>
+                      <Text style={styles.peopleLabel}>Lần mượn</Text>
+                    </OutlineCircle>
+                  </View>
+                </View>
+              </View>
+              <Text
+                style={[
+                  styles.peopleLabel,
+                  {
+                    marginTop: 10,
+                  },
+                ]}>
+                Số giao dịch dịch vụ:{' '}
+                {userDetail.trade_ser ? userDetail.trade_ser : 0} lần giao dịch
+              </Text>
+              <TapGestureHandler
+                onGestureEvent={_backTapTradeStateGestureEvent}
+                onHandlerStateChange={_backTapTradeStateGestureEvent}>
+                <Animated.View style={styles.backButtonContainer}>
+                  <Text style={styles.backText}>Trở về</Text>
+                </Animated.View>
+              </TapGestureHandler>
+            </View>
           </UserModalContainer>
         </View>
       </ScrollView>

@@ -11,10 +11,6 @@ import {
 export const CustomersStyles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  wrapper: {
-    width: '100%',
-    height: '100%',
     paddingHorizontal: 20,
   },
   headerContainer: {
@@ -32,11 +28,22 @@ export const CustomersStyles = StyleSheet.create({
   headerSearchIcon: {
     paddingHorizontal: 15,
   },
+  headerFakeInput: {
+    width: SCREEN_WIDTH - 160,
+    paddingRight: 20,
+    height: 50,
+    justifyContent: 'center',
+  },
+  headerFakeTextInput: {
+    fontSize: 17,
+    color: '#96A7AF',
+    fontFamily: 'Poppins-Regular',
+  },
   headerTextInput: {
     fontSize: 17,
     color: 'white',
-    width: SCREEN_WIDTH - 160,
-    paddingRight: 20,
+    width: SCREEN_WIDTH - 190,
+    paddingRight: 40,
     fontFamily: 'Poppins-Regular',
   },
   headerRightIconContainer: {
@@ -45,6 +52,27 @@ export const CustomersStyles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
     backgroundColor: '#40DF9F',
+  },
+  errorContainer: {
+    marginTop: 50,
+    alignItems: 'center',
+  },
+  errorText: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 17,
+    color: 'white',
+  },
+  errorButtonContainer: {
+    backgroundColor: '#FF565E',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 150,
+    borderRadius: 3,
+  },
+  errorButtonText: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 17,
+    color: 'white',
   },
 });
 
@@ -105,7 +133,6 @@ export const CustomerStyles = StyleSheet.create({
     borderStyle: 'dashed',
   },
   imageContainer: {
-    backgroundColor: 'white',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -149,6 +176,7 @@ export const CustomerStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
+    marginBottom: 5,
   },
   label: {
     fontSize: 17,
@@ -161,7 +189,15 @@ export const CustomerStyles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     color: 'white',
     flexGrow: 1,
-    marginLeft: 30,
+  },
+  infoContainer: {
+    justifyContent: 'center',
+    paddingLeft: 30,
+  },
+  infoId: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 15,
+    color: 'white',
   },
   divider: {
     height: 5,
@@ -216,12 +252,82 @@ export const CustomerStyles = StyleSheet.create({
     backgroundColor: 'black',
     zIndex: -1,
   },
+  mobileModalContainer: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  topTitle: {
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 25,
+    textAlign: 'center',
+  },
+  dataContainer: {
+    alignItems: 'center',
+  },
+  dataTitle: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 17,
+  },
+  subData: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 13,
+  },
+  data: {
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 40,
+  },
+  dataLabel: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 20,
+  },
+  subSectionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  peopleContainer: {
+    width: '50%',
+    alignItems: 'center',
+  },
+  peopleTitle: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 15,
+  },
+  people: {
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 25,
+    textAlign: 'center',
+  },
+  peopleLabel: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 15,
+    textAlign: 'center',
+  },
+  backButtonContainer: {
+    backgroundColor: '#64b5f6',
+    width: 250,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    borderRadius: 5,
+  },
+  backText: {
+    color: 'white',
+    fontFamily: 'Poppins-Regular',
+    fontSize: 17,
+  },
+  top2Title: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 17,
+    textAlign: 'center',
+  },
 });
 
 export const UserModalStyles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -229,5 +335,6 @@ export const UserModalStyles = StyleSheet.create({
     bottom: 0,
     backgroundColor: 'white',
     zIndex: 1000,
+    borderRadius: 5,
   },
 });
