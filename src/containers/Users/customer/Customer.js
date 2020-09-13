@@ -23,15 +23,53 @@ import runSpring from '../../../animation-config/runSpring';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import {PieChart} from 'react-native-chart-kit';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import OutlineCircle from '../../../components/OutlineCircle';
+import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import LinearGradient from 'react-native-linear-gradient';
 
-const chartConfig = {
-  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-};
+const LinearGradientAnimted = Animated.createAnimatedComponent(LinearGradient);
 
+function getColor(value) {
+  if (0 <= value && value <= 0.15)
+    return {
+      color: '#129E02',
+      label: 'Rủi ro rất thấp',
+      detail: 'Lãi suất cho vay ưu đãi, cho phép vay quá hạn dưới 90 ngày',
+    };
+  else if (0.15 < value && value <= 0.3)
+    return {
+      color: '#85CA00',
+      label: 'Rủi ro thấp',
+      detail: 'Lãi suất cho vay ưu đãi, cho phép vay quá hạn dưới 30 ngày',
+    };
+  else if (0.3 < value && value <= 0.5)
+    return {
+      color: '#F5D901',
+      label: 'Rủi ro dưới trung bình',
+      detail: 'Lãi suất cho vay tiêu chuẩn, không cho phép vay quá hạn',
+    };
+  else if (0.5 < value && value <= 0.7)
+    return {
+      color: '#F16601',
+      label: 'Rủi ro trung bình',
+      detail: 'Lãi suất cho vay tiêu chuấn, cho vay tối đa 200 triệu',
+    };
+  else if (0.7 < value && value <= 0.85)
+    return {
+      color: '#e64a19',
+      label: 'Rủi ro cao',
+      detail:
+        'Lãi suất cho vay cao, cho vay tối đa 50 triệu, không cho phép vay quá hạn',
+    };
+  else if (0.85 < value && value <= 1)
+    return {
+      color: '#dd2c00',
+      label: 'Rủi ro rất cao',
+      detail: 'Không đủ điều kiện cho vay',
+    };
+}
 export default function Customer({navigation, route}) {
   const modalHeight = SCREEN_HEIGHT - StatusBar.currentHeight - 120;
   const _tapState = useRef(new Value(State.UNDETERMINED)).current;
@@ -114,12 +152,15 @@ export default function Customer({navigation, route}) {
     [_backTapTradeState],
   );
   const {userDetail, icon, random_color} = route.params;
+  let label_detail = getColor(userDetail.label);
 
   return (
     <GradientBackground extraStyles={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{height: SCREEN_HEIGHT}}>
+        contentContainerStyle={{
+          flex: 1,
+        }}>
         <View style={styles.wrapper}>
           <MaterialCommunityIcon
             name="keyboard-backspace"
@@ -189,18 +230,36 @@ export default function Customer({navigation, route}) {
           </View>
           <View style={styles.divider} />
           <View style={styles.chartContainer}>
-            <Text style={styles.chartTitle}>Credit Score</Text>
-            {/* <PieChart
-              data={userDetail.credit_scores}
-              width={300}
-              height={200}
-              chartConfig={chartConfig}
-              accessor="value"
-              paddingLeft={20}
-              style={{
-                marginTop: 10,
-              }}
-            /> */}
+            <AnimatedCircularProgress
+              size={(SCREEN_WIDTH - 30) / 3}
+              width={15}
+              fill={userDetail.label * 100}
+              tintColor={label_detail.color}
+              backgroundColor="#3d5875">
+              {(fill) => (
+                <Text style={{color: 'white'}}>
+                  {(userDetail.label * 100).toFixed(2)} %
+                </Text>
+              )}
+            </AnimatedCircularProgress>
+            <View
+              style={[
+                styles.chartDetail,
+                {width: ((SCREEN_WIDTH - 30) * 2) / 3 - 10},
+              ]}>
+              <Text style={styles.labelChartLabel}>
+                <Text style={styles.labelChart}> Xác suất rủi ro:</Text>{' '}
+                {userDetail.label.toFixed(5)}
+              </Text>
+              <Text style={styles.labelChartLabel}>
+                <Text style={styles.labelChart}> Phân loại:</Text>{' '}
+                {label_detail.label}
+              </Text>
+              <Text numberOfLines={5} style={styles.labelChartDetail}>
+                <Text style={styles.labelChart}> Mô tả:</Text>{' '}
+                {label_detail.detail}
+              </Text>
+            </View>
           </View>
           {/* tap cước di động */}
           <TapGestureHandler
@@ -267,7 +326,9 @@ export default function Customer({navigation, route}) {
                   {userDetail.sum_uploaddata ? userDetail.sum_uploaddata : 0}{' '}
                   Bytes
                 </Text>
-                <OutlineCircle outlineColor="#3ED598" width={modalHeight / 3.5}>
+                <OutlineCircle
+                  outlineColor={['#ee0979', '#ff6a00']}
+                  width={modalHeight / 3.5}>
                   <Text style={styles.data}>
                     {userDetail.sum_uploaddata
                       ? (userDetail.sum_uploaddata / Math.pow(1024, 3)).toFixed(
@@ -282,7 +343,7 @@ export default function Customer({navigation, route}) {
                 <View style={styles.peopleContainer}>
                   <Text style={styles.peopleTitle}>Số người đã liên lạc</Text>
                   <OutlineCircle
-                    outlineColor="#FF565E"
+                    outlineColor={['#1D976C', '#93F9B9']}
                     width={modalHeight / 4.5}>
                     <Text style={styles.people}>
                       {userDetail.PARTNER_MSISDN
@@ -295,7 +356,7 @@ export default function Customer({navigation, route}) {
                 <View style={styles.peopleContainer}>
                   <Text style={styles.peopleTitle}>Số tiền nạp dịch vụ</Text>
                   <OutlineCircle
-                    outlineColor="#FFC542"
+                    outlineColor={['#FDC830', '#F37335']}
                     width={modalHeight / 4.5}>
                     <Text style={styles.people}>
                       {userDetail.sum_re ? userDetail.sum_re / 1000 : 0}K
@@ -307,9 +368,13 @@ export default function Customer({navigation, route}) {
               <TapGestureHandler
                 onGestureEvent={_backTapStateGestureEvent}
                 onHandlerStateChange={_backTapStateGestureEvent}>
-                <Animated.View style={styles.backButtonContainer}>
+                <LinearGradientAnimted
+                  colors={['#F27A54', '#A154F2']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 1}}
+                  style={styles.backButtonContainer}>
                   <Text style={styles.backText}>Trở về</Text>
-                </Animated.View>
+                </LinearGradientAnimted>
               </TapGestureHandler>
             </View>
           </UserModalContainer>
@@ -327,7 +392,7 @@ export default function Customer({navigation, route}) {
                 <View style={styles.subSectionContainer}>
                   <View style={styles.peopleContainer}>
                     <OutlineCircle
-                      outlineColor="#3ED598"
+                      outlineColor={['#ee0979', '#ff6a00']}
                       width={modalHeight / 4.5}>
                       <Text style={styles.people}>
                         {userDetail.mon_pos ? userDetail.mon_pos / 1000000 : 0}{' '}
@@ -338,7 +403,7 @@ export default function Customer({navigation, route}) {
                   </View>
                   <View style={styles.peopleContainer}>
                     <OutlineCircle
-                      outlineColor="#FF565E"
+                      outlineColor={['#1D976C', '#93F9B9']}
                       width={modalHeight / 4.5}>
                       <Text style={styles.people}>
                         {userDetail.mon_neg ? -userDetail.mon_neg / 1000000 : 0}{' '}
@@ -354,7 +419,7 @@ export default function Customer({navigation, route}) {
                 <View style={styles.subSectionContainer}>
                   <View style={styles.peopleContainer}>
                     <OutlineCircle
-                      outlineColor="#9575cd"
+                      outlineColor={['#FDC830', '#F37335']}
                       width={modalHeight / 4.5}>
                       <Text style={styles.people}>
                         {userDetail.trade_re ? userDetail.trade_re : 0}{' '}
@@ -364,7 +429,7 @@ export default function Customer({navigation, route}) {
                   </View>
                   <View style={styles.peopleContainer}>
                     <OutlineCircle
-                      outlineColor="#ffa726"
+                      outlineColor={['#7F00FF', '#E100FF']}
                       width={modalHeight / 4.5}>
                       <Text style={styles.people}>
                         {userDetail.trade_lo ? userDetail.trade_lo : 0}{' '}
@@ -387,9 +452,13 @@ export default function Customer({navigation, route}) {
               <TapGestureHandler
                 onGestureEvent={_backTapTradeStateGestureEvent}
                 onHandlerStateChange={_backTapTradeStateGestureEvent}>
-                <Animated.View style={styles.backButtonContainer}>
+                <LinearGradientAnimted
+                  colors={['#F27A54', '#A154F2']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 1}}
+                  style={styles.backButtonContainer}>
                   <Text style={styles.backText}>Trở về</Text>
-                </Animated.View>
+                </LinearGradientAnimted>
               </TapGestureHandler>
             </View>
           </UserModalContainer>

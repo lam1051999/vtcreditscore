@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 import {SplashScreenStyles as styles} from '../styles/Styles';
 import Animated, {Clock, interpolate} from 'react-native-reanimated';
 import GradientBackground from '../../gradient-background/GradientBackground';
@@ -21,7 +21,7 @@ export default function SplashScreen() {
             opacity: _opacity,
           },
         ]}>
-        Đánh giá tín dụng
+        Credit Scoring
       </Animated.Text>
       <Animated.Text
         style={[
@@ -31,7 +31,7 @@ export default function SplashScreen() {
           },
         ]}
         numberOfLines={2}>
-        Đánh giá điểm tín dụng chính xác, phân tích dữ liệu lớn
+        Fast, accurate, reliable evaluation
       </Animated.Text>
       <Animated.Image
         resizeMode="cover"
@@ -47,6 +47,13 @@ export default function SplashScreen() {
           },
         ]}
       />
+      <ActivityIndicator
+        size="large"
+        color="#40DF9F"
+        style={{
+          marginTop: 60,
+        }}
+      />
       <View style={styles.empty} />
       <Animated.Text
         style={[
@@ -55,7 +62,7 @@ export default function SplashScreen() {
             opacity: _opacity,
           },
         ]}>
-        Phát triển bởi Học Sinh Giỏi
+        Powered by Học Sinh Giỏi
       </Animated.Text>
     </GradientBackground>
   );

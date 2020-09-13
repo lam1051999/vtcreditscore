@@ -185,7 +185,7 @@ export const CustomerStyles = StyleSheet.create({
     marginLeft: 30,
   },
   name: {
-    fontSize: 25,
+    fontSize: 20,
     fontFamily: 'Poppins-Regular',
     color: 'white',
     flexGrow: 1,
@@ -203,18 +203,6 @@ export const CustomerStyles = StyleSheet.create({
     height: 5,
     backgroundColor: '#B8C2C0',
     marginVertical: 15,
-  },
-  chartContainer: {
-    backgroundColor: '#30444E',
-    borderRadius: 20,
-  },
-  chartTitle: {
-    fontSize: 20,
-    color: 'white',
-    fontFamily: 'Poppins-Regular',
-    position: 'absolute',
-    top: 0,
-    right: 70,
   },
   mobileFeeContainer: {
     backgroundColor: '#30444E',
@@ -262,6 +250,7 @@ export const CustomerStyles = StyleSheet.create({
     fontFamily: 'Poppins-SemiBold',
     fontSize: 25,
     textAlign: 'center',
+    color: 'white',
   },
   dataContainer: {
     alignItems: 'center',
@@ -269,18 +258,22 @@ export const CustomerStyles = StyleSheet.create({
   dataTitle: {
     fontFamily: 'Poppins-Regular',
     fontSize: 17,
+    color: 'white',
   },
   subData: {
     fontFamily: 'Poppins-Regular',
     fontSize: 13,
+    color: 'white',
   },
   data: {
     fontFamily: 'Poppins-SemiBold',
     fontSize: 40,
+    color: 'white',
   },
   dataLabel: {
     fontFamily: 'Poppins-Regular',
     fontSize: 20,
+    color: 'white',
   },
   subSectionContainer: {
     flexDirection: 'row',
@@ -293,20 +286,23 @@ export const CustomerStyles = StyleSheet.create({
   },
   peopleTitle: {
     fontFamily: 'Poppins-Regular',
-    fontSize: 15,
+    color: 'white',
+    fontSize: 13,
   },
   people: {
     fontFamily: 'Poppins-SemiBold',
+    color: 'white',
+
     fontSize: 25,
     textAlign: 'center',
   },
   peopleLabel: {
     fontFamily: 'Poppins-Regular',
+    color: 'white',
     fontSize: 15,
     textAlign: 'center',
   },
   backButtonContainer: {
-    backgroundColor: '#64b5f6',
     width: 250,
     height: 50,
     justifyContent: 'center',
@@ -317,12 +313,37 @@ export const CustomerStyles = StyleSheet.create({
   backText: {
     color: 'white',
     fontFamily: 'Poppins-Regular',
-    fontSize: 17,
+    fontSize: 20,
   },
   top2Title: {
     fontFamily: 'Poppins-Regular',
     fontSize: 17,
     textAlign: 'center',
+    color: 'white',
+  },
+  chartContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 15,
+  },
+  chartDetail: {
+    paddingHorizontal: 10,
+    marginLeft: 10,
+  },
+  labelChart: {
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 15,
+    color: 'white',
+  },
+  labelChartLabel: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 15,
+    color: 'white',
+  },
+  labelChartDetail: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 15,
+    color: 'white',
   },
 });
 
@@ -335,6 +356,6 @@ export const UserModalStyles = StyleSheet.create({
     bottom: 0,
     backgroundColor: 'white',
     zIndex: 1000,
-    borderRadius: 5,
+    borderRadius: 100,
   },
 });

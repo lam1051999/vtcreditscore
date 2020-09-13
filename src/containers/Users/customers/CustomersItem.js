@@ -4,15 +4,22 @@ import {CustomersItemStyles as styles} from '../styles/Styles';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import {
-  BACKGROUNDCOLOR_LIST,
   FEMALE_ICONS,
   MALE_ICONS,
   UNKNOWN_ICON,
 } from '../../../constants/Constants';
 
+function getColor(value) {
+  if (0 <= value && value <= 0.15) return '#129E02';
+  else if (0.15 < value && value <= 0.3) return '#85CA00';
+  else if (0.3 < value && value <= 0.5) return '#F5D901';
+  else if (0.5 < value && value <= 0.7) return '#F16601';
+  else if (0.7 < value && value <= 0.85) return '#e64a19';
+  else if (0.85 < value && value <= 1) return '#dd2c00';
+}
+
 export default function CustomersItem({item, index}) {
   const navigation = useNavigation();
-  const random_color = BACKGROUNDCOLOR_LIST[index % 3];
   let icon;
   if (item.sex) {
     if (item.sex === 'F') {
@@ -30,14 +37,14 @@ export default function CustomersItem({item, index}) {
         navigation.navigate('customer', {
           userDetail: item,
           icon: icon,
-          random_color: random_color,
+          random_color: getColor(item.label),
         })
       }>
       <View
         style={[
           styles.imageContainer,
           {
-            backgroundColor: random_color,
+            backgroundColor: getColor(item.label),
           },
         ]}>
         <Image source={icon} resizeMode="cover" style={styles.image} />

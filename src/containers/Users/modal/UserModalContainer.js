@@ -1,6 +1,7 @@
 import React from 'react';
 import {UserModalStyles as styles} from '../styles/Styles';
 import Animated from 'react-native-reanimated';
+import GradientModal from '../../gradient-background/GradientModal';
 
 export default function UserModalContainer({
   children,
@@ -26,7 +27,7 @@ export default function UserModalContainer({
           marginTop: marginTop,
         },
       ]}>
-      {children}
+      <GradientModal>{children}</GradientModal>
     </Animated.View>
   );
 }
