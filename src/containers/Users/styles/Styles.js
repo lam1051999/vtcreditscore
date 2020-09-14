@@ -29,7 +29,7 @@ export const CustomersStyles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   headerFakeInput: {
-    width: SCREEN_WIDTH - 160,
+    width: SCREEN_WIDTH - 40 - 55,
     paddingRight: 20,
     height: 50,
     justifyContent: 'center',

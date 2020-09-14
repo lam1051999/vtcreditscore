@@ -82,9 +82,6 @@ export default function Customers({navigation}) {
             <Text style={styles.headerFakeTextInput}>Nhập id...</Text>
           </View>
         </View>
-        <View style={styles.headerRightIconContainer}>
-          <AntDesignIcon name="bars" color="white" size={25} />
-        </View>
       </TouchableWithoutFeedback>
       {isError ? (
         <View style={styles.errorContainer}>
